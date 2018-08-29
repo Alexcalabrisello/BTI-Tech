@@ -2,11 +2,11 @@
 library(tidyverse)
 library(lubridate)
 
-setwd("~/Documents/UTS/Merge Data Examples/FOR CLASS")
+# setwd("~/Documents/UTS/Merge Data Examples/FOR CLASS")
 
 rain <- read_csv("IDCJAC0009_066062_1800_Data_RAIN.csv")
-maxTemp <- read_csv("IDCJAC0010_066062_1800_Data_MAXTEMP.csv")
-minTemp <- read_csv("IDCJAC0011_066062_1800_Data_MINTEMP.csv")
+maxTemp <- read_csv("IDCJAC0010_066062_1800_Data_MAXTEMP 2.csv")
+minTemp <- read_csv("IDCJAC0011_066062_1800_Data_MINTEMP 2.csv")
 solar <- read_csv("IDCJAC0016_066062_1800_Data_SOLAREXP.csv")
 
 ##get number of rows and cols for each
@@ -50,7 +50,7 @@ fullJoin <- rain %>%
 
 ##left join
 leftJoin <- rain %>% 
-  left_join(maxTemp, by="Date") %>%
+  left_join(maxTemp) %>%
   left_join(minTemp, by="Date") %>% 
   left_join(solar, by="Date") %>%
   select(Date, rainfall, maxTemp, minTemp, SolarExp)
@@ -61,6 +61,7 @@ rightJoin <- rain %>%
   right_join(minTemp, by="Date") %>% 
   right_join(solar, by="Date") %>%
   select(Date, rainfall, maxTemp, minTemp, SolarExp)
+        
 
 # exercise in class
 # mix the joins up depending on the need -
@@ -69,11 +70,8 @@ rightJoin <- rain %>%
 #   does high rainfall correlate with low temperatures?
 
 
-##plotting average rainfall over years
-RainFall3 <- rain %>% 
-  mutate(Year = year(Date)) %>% 
-  mutate(Month = month(Date)) %>% 
-  mutate(Season = ifelse(1, Month), "Summer")
-(Month ==2 | Month ==3|Month ==4))
-  
+
+
+
+
 
