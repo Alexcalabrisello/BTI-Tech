@@ -1,3 +1,3 @@
 # BTI-Tech
 
-A file we used as an example in class
+Class examples and other R Studio fun!
