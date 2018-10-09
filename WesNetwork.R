@@ -1,13 +1,15 @@
-setwd("~/Documents/Network Examples")
+# setwd("~/Documents/Network Examples")
 library(tidyverse)
 
+##reading in data file
 wes1 <- read_csv("WesAndersonCast.csv")
+# View(wes1)
 
 ##removing some of the bad characters & combining O Wilson's records
 wes1$Name <- gsub("\xca", "", wes1$Name)
 wes1$Name <- gsub("Owen C. Wilson", "Owen Wilson", wes1$Name)
 
-View(wes1)
+# View(wes1)
 
 ##creating matrix
 combo2 <- wes1 %>%
@@ -31,13 +33,18 @@ WesEdge <- combo4 %>%
   
 View(WesEdge)
 
-##exporting edge files
+
 
 ##creating node file
 
 WesNode <- WesEdge %>% 
-  distinct(Actor) %>% 
-  rowid_to_column("NodeID")
+        distinct(Actor) %>% 
+        rowid_to_column("NodeID") %>% 
+        mutate(NodeID2= NodeID - 1) %>% ##recoding first node as 0
+        select(-NodeID) %>% 
+        select(NodeID2, Actor) %>% 
+        rename(NodeID=NodeID2)
+
 
 ##creating final edge file with numerical values
 
