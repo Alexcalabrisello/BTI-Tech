@@ -1,0 +1,45 @@
+<html>
+<head>
+    <!-- Include the D3 library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <script>
+
+        // Array of data objects to visualise
+        const data = [
+            {type: "Movie", count: 11},
+            {type: "TV Movie", count: 4},
+            {type: "TV Series", count: 59},
+            {type: "TV Mini-Series", count: 6},
+        ];
+
+        // Create the SVG container that we're going to use for the visualisation
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", 500)
+            .attr("height", 200)
+            .style("padding", "10px");
+
+        // Selects the svg elements to be used ("rect") and binds the data to this selection
+        const selection = svg.selectAll("rect")
+            .data(data);
+
+        // The enter function returns new elements for new data points (all of them in this case)
+        // For each new element, append a rect
+        selection.enter().append("rect")
+            // the x value for the rect is static
+            .attr("x", 0)
+            // The y value for the rect uses the yScale created above to determine where it starts
+            .attr("y", (d,i) => i*30+30)
+            // The width of the rect is determined by the value of count for that data point
+            .attr("width", d => d.count * 30)
+            // The height is determined by the yScale
+            .attr("height", 20)
+            // Gives the rect some color so that you can see it
+            .style("fill", "steelblue")
+
+    </script>
+</body>
+
+</html>

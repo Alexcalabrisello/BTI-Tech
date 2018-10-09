@@ -1,0 +1,65 @@
+<html>
+<head>
+    <!-- Include the D3 library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+    <script>
+
+        // Array of data objects to visualise
+        const data = [
+            {type: "Movie", count: 11},
+            {type: "TV Movie", count: 4},
+            {type: "TV Series", count: 59},
+            {type: "TV Mini-Series", count: 6},
+        ];
+
+        // Create the SVG container that we're going to use for the visualisation
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", 500)
+            .attr("height", 200)
+            .style("padding", "10px")
+
+        const leftMargin = 100 
+        const topMargin = 15
+
+        const xScale = d3.scaleLinear()
+            .domain([0,d3.max(data.map(d => d.count))])
+            .range([0,500])
+
+        const xAxis=d3.axisTop(xScale)
+        .ticks(10)
+
+        svg.append("g")
+        .attr("transform", "translate(1,15)")
+        .call(xAxis)
+
+        
+        const yScale = d3.scaleBand()
+            .domain(data.map(d => d.type)) 
+            .range([0,100])
+            .padding(0.2)
+
+       const yAxis=d3.axisLeft(yScale)
+
+       svg.append("g")
+       .attr("transform", "translate(" + leftMargin +","+ topMargin+")")
+        .call(yAxis)
+
+
+
+        const selection = svg.selectAll("rect")
+            .data(data)
+
+            selection.enter().append("rect")
+                .attr("x", leftMargin)
+                .attr("y", (d,i) => yScale(d.type) + topMargin)
+                .attr("width", (d,i) => xScale(d.count))
+                .attr("height", (d,i) => yScale.bandwidth())
+                .style("fill", "steelblue")
+
+    </script>
+</body>
+
+</html>
